@@ -4,13 +4,13 @@ items = [
     {"type": "素材", "name": "生肉", "amount": 1},
     {"type": "素材", "name": "石ころ", "amount": 3},
     {"type": "アイテム", "name": "焚き火", "amount": 0},
-    {"type": "消耗品", "name": "焼き肉", "amount": 1},
-    {"type": "消耗品", "name": "いかだ", "amount": 1},
+    {"type": "消耗品", "name": "焼き肉", "amount": 0},
+    {"type": "消耗品", "name": "いかだ", "amount": 0},
     {"type": "素材", "name": "海水", "amount": 3},
     {"type": "消耗品", "name": "水", "amount": 0},
     {"type": "素材", "name": "繊維", "amount": 0},
     {"type": "アイテム", "name": "浄水器", "amount": 0},
-    {"type": "アイテム", "name": "斧", "amount": 1},
+    {"type": "アイテム", "name": "斧", "amount": 0},
     {"type": "アイテム", "name": "弓", "amount": 0},
     {"type": "アイテム", "name": "つるはし", "amount": 0},
     {"type": "素材", "name": "プラスチック ", "amount": 0},
@@ -18,4 +18,5 @@ items = [
     {"type": "アイテム", "name": "木工機", "amount": 0},
     {"type": "素材", "name": "レンガ", "amount": 0},
     {"type": "アイテム", "name": "石工機", "amount": 0},
+    {"type": "アイテム", "name": "水筒", "amount": 0}
 ]

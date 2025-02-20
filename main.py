@@ -181,10 +181,10 @@ class MainWindow(Qw.QMainWindow):
         self.DeleteButton()
         self.setStyleSheet(
             "QMainWindow {background-image: url('Assets/sleep.png'); background-size: cover;}")
-        self.time += 7
+        self.time += 8
         player["満腹度"] -= 10
         player["喉の潤い"] -= 10
-        player["正気度"] += 50
+        player["正気度"] += 55
         self.tb_log.append('zzz')
         self.handle_next_button()
         self.DeleteButton()
@@ -282,7 +282,7 @@ class MainWindow(Qw.QMainWindow):
                 "QMainWindow {background-image: url('Assets/deepforest.jpg'); background-size: cover;}")
         elif map_date[index]['name'] == "難破船":
             self.setStyleSheet(
-                "QMainWindow {background-image: url('Assets/shipwreck.jpg'); background-size: cover;}")
+                "QMainWindow {background-image: url('Assets/Ship.jpg'); background-size: cover;}")
         for item in map_date[index]['items']:
             if item[3] == True and item[2] > random.random():
                 self.tb_log.append(f'{item[0]}を入手しました。')
@@ -293,9 +293,12 @@ class MainWindow(Qw.QMainWindow):
         if map_date[0]['count'] == 5:
             map_date[2]['unlock'] = True
             self.tb_log.append('深い森が解放されました。')
+            map_date[0]['count'] = 10
+
         if map_date[1]['count'] == 5:
             map_date[3]['unlock'] = True
             self.tb_log.append('難破船が解放されました。')
+            map_date[1]['count'] = 10
         self.handle_next_button()
         self.DeleteButton()
         self.ButtonInit()
@@ -356,7 +359,6 @@ class MainWindow(Qw.QMainWindow):
         self.btn_Bow.installEventFilter(self)
         self.btn_Bow.clicked.connect(lambda: self.OnCraft('弓'))
         # 石のつるはしボタンの生成と設定
-
         self.btn_Pickaxe = Qw.QPushButton('つるはし')
         self.btn_Pickaxe.setMinimumSize(50, 30)
         self.btn_Pickaxe.setMaximumSize(100, 30)
@@ -423,19 +425,19 @@ class MainWindow(Qw.QMainWindow):
             items[7]['amount'] -= 3
             items[8]['amount'] += 1
             self.tb_log.setText('水を作成しました')
-        elif ItemName == '斧' and items[3]['amount'] >= 5 and items[0]['amount'] >= 3 and items[9]['amount'] >= 2:
-            items[3]['amount'] -= 5
+        elif ItemName == '斧' and items[3]['amount'] >= 3 and items[0]['amount'] >= 3 and items[9]['amount'] >= 2:
+            items[3]['amount'] -= 3
             items[0]['amount'] -= 3
             items[9]['amount'] -= 2
             items[11]['amount'] += 1
             self.tb_log.setText('斧を作成しました')
-        elif ItemName == '弓' and items[0]['amount'] >= 5 and items[9]['amount'] >= 5:
-            items[0]['amount'] -= 5
-            items[9]['amount'] -= 5
+        elif ItemName == '弓' and items[0]['amount'] >= 4 and items[9]['amount'] >= 3:
+            items[0]['amount'] -= 4
+            items[9]['amount'] -= 3
             items[12]['amount'] += 1
             self.tb_log.setText('弓を作成しました')
-        elif ItemName == 'つるはし' and items[3]['amount'] >= 5 and items[0]['amount'] >= 3 and items[9]['amount'] >= 2:
-            items[3]['amount'] -= 5
+        elif ItemName == 'つるはし' and items[3]['amount'] >= 3 and items[0]['amount'] >= 3 and items[9]['amount'] >= 2:
+            items[3]['amount'] -= 3
             items[0]['amount'] -= 3
             items[9]['amount'] -= 2
             items[13]['amount'] += 1
@@ -462,10 +464,10 @@ class MainWindow(Qw.QMainWindow):
             items[14]['amount'] -= 1
             items[17]['amount'] += 1
             self.tb_log.setText('レンガを作成しました')
-        elif ItemName == 'いかだ' and items[16]['amount'] >= 3 and items[18]['amount'] >= 3 and items[9]['amount'] >= 10 and items[5]['amount'] >= 5 and items[8]['amount'] >= 5:
+        elif ItemName == 'いかだ' and items[16]['amount'] >= 3 and items[18]['amount'] >= 3 and items[9]['amount'] >= 7 and items[5]['amount'] >= 5 and items[8]['amount'] >= 5:
             items[16]['amount'] -= 3
             items[18]['amount'] -= 3
-            items[9]['amount'] -= 10
+            items[9]['amount'] -= 7
             items[5]['amount'] -= 5
             items[8]['amount'] -= 5
             items[6]['amount'] += 1
@@ -533,15 +535,13 @@ class MainWindow(Qw.QMainWindow):
             self.tb_log.setText('生肉を使用しました。')
         elif ItemName == '焼き肉' and items[5]['amount'] >= 1:
             items[5]['amount'] -= 1
-            items[6]['amount'] += 1
             if player['満腹度'] < 100:
-                player['満腹度'] += 20
+                player['満腹度'] += 30
                 if player['満腹度'] > 100:
                     player['満腹度'] = 100
             self.tb_log.setText('焼き肉を使用しました。')
         elif ItemName == '海水' and items[7]['amount'] >= 1:
             items[7]['amount'] -= 1
-            items[8]['amount'] += 1
             if player['喉の潤い'] < 100:
                 player['喉の潤い'] += 10
                 player["正気度"] -= 5
@@ -551,7 +551,7 @@ class MainWindow(Qw.QMainWindow):
         elif ItemName == '水' and items[8]['amount'] >= 1:
             items[8]['amount'] -= 1
             if player['喉の潤い'] < 100:
-                player['喉の潤い'] += 20
+                player['喉の潤い'] += 30
                 if player['喉の潤い'] > 100:
                     player['喉の潤い'] = 100
             self.tb_log.setText('水を使用しました。')
@@ -596,7 +596,7 @@ class MainWindow(Qw.QMainWindow):
             if event.type() == Qc.QEvent.Enter:  # マウスがボタンに入った時
                 self.tb_log.setText('森を探索します。')
                 self.tb_log.append('木材や動物の素材を入手できます。')
-                self.tb_log.append('満腹度、喉の潤い、正気度がそれぞれ10,10,5減少します。')
+                self.tb_log.append('満腹度、喉の潤い、正気度がそれぞれ5,7,5減少します。')
             elif event.type() == Qc.QEvent.Leave:  # マウスがボタンから離れた時
                 if self.btn_forest.isVisible():
                     self.DrawItems()
@@ -606,7 +606,7 @@ class MainWindow(Qw.QMainWindow):
             if event.type() == Qc.QEvent.Enter:  # マウスがボタンに入った時
                 self.tb_log.setText('海辺を探索します。')
                 self.tb_log.append('石ころ、海水などの素材を入手できます。')
-                self.tb_log.append('満腹度、喉の潤い、正気度がそれぞれ15,5,0減少します。')
+                self.tb_log.append('満腹度、喉の潤い、正気度がそれぞれ10,5,0減少します。')
             elif event.type() == Qc.QEvent.Leave:  # マウスがボタンから離れた時
                 if self.btn_seaside.isVisible():
                     self.DrawItems()
@@ -616,7 +616,7 @@ class MainWindow(Qw.QMainWindow):
             if event.type() == Qc.QEvent.Enter:  # マウスがボタンに入った時
                 self.tb_log.setText('深い森を探索します。')
                 self.tb_log.append('木材や繊維、動物の素材を入手できます。')
-                self.tb_log.append('満腹度、喉の潤い、正気度がそれぞれ20,10,10減少します。')
+                self.tb_log.append('満腹度、喉の潤い、正気度がそれぞれ7,13,15減少します。')
             elif event.type() == Qc.QEvent.Leave:  # マウスがボタンから離れた時
                 if self.btn_deepforest.isVisible():
                     self.DrawItems()
@@ -626,7 +626,7 @@ class MainWindow(Qw.QMainWindow):
             if event.type() == Qc.QEvent.Enter:
                 self.tb_log.setText('難破船を探索します。')
                 self.tb_log.append('石ころや繊維などの素材を入手できます。')
-                self.tb_log.append('満腹度、喉の潤い、正気度がそれぞれ20,10,5減少します。')
+                self.tb_log.append('満腹度、喉の潤い、正気度がそれぞれ10,10,15減少します。')
             elif event.type() == Qc.QEvent.Leave:
                 if self.btn_shipwreck.isVisible():
                     self.DrawItems()
@@ -698,7 +698,7 @@ class MainWindow(Qw.QMainWindow):
         # 石の斧ボタン
         elif hasattr(self, 'btn_Axe') and obj == self.btn_Axe:
             if event.type() == Qc.QEvent.Enter:  # マウスがボタンに入った時
-                self.tb_log.setText('石ころ5つ、木材3つ、繊維2つで製作可能です。')
+                self.tb_log.setText('石ころ3つ、木材3つ、繊維2つで製作可能です。')
                 self.tb_log.append('素材を採集する際に木材の取得量が増加する。')
             elif event.type() == Qc.QEvent.Leave:  # マウスがボタンから離れた時
                 self.DrawItems()
@@ -706,7 +706,7 @@ class MainWindow(Qw.QMainWindow):
         # 弓ボタン
         elif hasattr(self, 'btn_Bow') and obj == self.btn_Bow:
             if event.type() == Qc.QEvent.Enter:  # マウスがボタンに入った時
-                self.tb_log.setText('木材5つ、繊維5つで製作可能です。')
+                self.tb_log.setText('木材4つ、繊維3つで製作可能です。')
                 self.tb_log.append('動物を狩る際に生肉の取得量が増加する。')
             elif event.type() == Qc.QEvent.Leave:  # マウスがボタンから離れた時
                 self.DrawItems()
@@ -714,7 +714,7 @@ class MainWindow(Qw.QMainWindow):
         # 石のつるはしボタン
         elif hasattr(self, 'btn_Pickaxe') and obj == self.btn_Pickaxe:
             if event.type() == Qc.QEvent.Enter:  # マウスがボタンに入った時
-                self.tb_log.setText('石ころ5つ、木材3つ、繊維2つで製作可能です。')
+                self.tb_log.setText('石ころ3つ、木材3つ、繊維2つで製作可能です。')
                 self.tb_log.append('石ころの採集量が増加する。')
             elif event.type() == Qc.QEvent.Leave:  # マウスがボタンから離れた時
                 self.DrawItems()
